@@ -28,8 +28,12 @@ def create_db():
     try:
         for item in all_memes:
             if len(item) > 13:
-                if not len(item['attachments']) == 1 or len(item['text']) > 100 or not item['attachments'][0]['type'] == 'photo':
-                    continue
+                try:
+                    if len(item['text']) > 100 or item['marked_as_ads'] == 1 or not len(item['attachments']) == 1 or not item['attachments'][0]['type'] == 'photo':
+                        continue
+                except Exception:
+                    print(item)
+
                 picture_link = find_best_picture(item['attachments'][0]['photo']['sizes'])
                 item_type = "post"
                 user_name = get_group_name(abs(item['owner_id']))
