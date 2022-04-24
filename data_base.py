@@ -7,9 +7,10 @@ from actions import *
 all_memes = []
 
 
-# Заполняем таблицу
+# Заполняет таблицу
 def fill_db(base, sql, album_owner_id=0, album_id=0, wall_owner_id=0, posts_amount=0):
     global all_memes
+    # Проверка на ввод данных
     if not album_owner_id == 0:
         all_memes = get_album_memes(owner_id=album_owner_id, album_id=album_id)
         if not wall_owner_id == 0:
@@ -77,9 +78,8 @@ if __name__ == '__main__':
     try:
         fill_db(base=db, sql=cursor, album_owner_id=197700721, album_id=281940823, wall_owner_id=150550417, posts_amount=100)
         actions = Actions(cursor=cursor, selected_meme_id=457240646)
+        actions.print_data()
         next_meme = actions.like_meme(meme_type="photo", owner_id=197700721, item_id=457240646, user_like=0)
-    # except Exception as e:
-    #     print(e)
     finally:
         db.close()
     print('Task have been finished!')
