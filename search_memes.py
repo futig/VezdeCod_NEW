@@ -1,20 +1,16 @@
 import requests
-from config import token
-
-API_VERSION = 5.131
+from config import *
 
 
 # Возвращает мемы из указанного альбома в формате json
-# owner_id - id сообщества (записывается с минусом вначале '-124631533')
+# owner_id - id сообщества
 # album_id - id альбома в сообществе
 def get_album_memes(owner_id: int, album_id: int):
-    # album_id = '281940823'
-    # owner_id = '-197700721'
     response = requests.get('https://api.vk.com/method/photos.get',
                             params={
                                 'access_token': token,
                                 'v': API_VERSION,
-                                'owner_id': owner_id,
+                                'owner_id': 0 - owner_id,
                                 'album_id': album_id,
                                 'extended': 1
                             })
@@ -22,10 +18,9 @@ def get_album_memes(owner_id: int, album_id: int):
 
 
 # Возвращает мемы со стены указанного сообщества в формате json
-# owner_id - id сообщества (записывается С МИНУСОМ вначале '-124631533')
+# owner_id - id сообщества
 # posts_amount - кол-во взятых постов
 def get_wall_memes(owner_id: int, posts_amount: int):
-    # owner_id = -150550417
     count = 100 if posts_amount >= 100 else posts_amount
     watched_posts = 0
     offset = 0
@@ -36,7 +31,7 @@ def get_wall_memes(owner_id: int, posts_amount: int):
                                 params={
                                     'access_token': token,
                                     'v': API_VERSION,
-                                    'owner_id': owner_id,
+                                    'owner_id': 0 - owner_id,
                                     'count': count,
                                     'offset': offset
                                 })
@@ -74,7 +69,7 @@ def get_user_name_by_id(user_id):
 
 
 # Находит имя группы по id
-# owner_id - id сообщества (записывается БЕЗ минуса вначале '124631533')
+# owner_id - id сообщества
 def get_group_name_by_id(owner_id):
     response = requests.get('https://api.vk.com/method/groups.getById',
                             params={
