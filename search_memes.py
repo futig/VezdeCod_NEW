@@ -10,7 +10,7 @@ def get_album_memes(owner_id: int, album_id: int):
                             params={
                                 'access_token': token,
                                 'v': API_VERSION,
-                                'owner_id': 0 - owner_id,
+                                'owner_id': 0 - abs(owner_id),
                                 'album_id': album_id,
                                 'extended': 1
                             })
@@ -31,7 +31,7 @@ def get_wall_memes(owner_id: int, posts_amount: int):
                                 params={
                                     'access_token': token,
                                     'v': API_VERSION,
-                                    'owner_id': 0 - owner_id,
+                                    'owner_id': 0 - abs(owner_id),
                                     'count': count,
                                     'offset': offset
                                 })
